@@ -90,24 +90,31 @@ namespace WpfApp1
         {
             get
             {
-                return area;
+                return calcular_area();
             }
             set
             {
-                area = value;
+                area = calcular_area();
                 OnPropertyChanged("Area");
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
 
         public string Perimetro
         {
             get
             {
-                return perimetro;
+                return calcular_perimetro();
             }
             set
             {
-                perimetro = value;
+                perimetro = calcular_perimetro();
                 OnPropertyChanged("Perimetro");
             }
         }
@@ -130,20 +137,37 @@ namespace WpfApp1
                 num = par22 + par11;
                 d = Math.Sqrt(num);
                 return d.ToString();
-
-
-
             }
             else if (altura==bas)
             {
-                
+                return ToString();
             }
 
 
         }
-        private void OnPropertyChanged(string v)
+
+        public string calcular_area()
         {
-            throw new NotImplementedException();
+            double b, h, a;
+            b = double.Parse(posenx1)+double.Parse(posenx2);
+            h = double.Parse(Poseny1)+double.Parse(Poseny2);
+            a = b * h;
+            return a.ToString();
         }
+
+
+        public string calcular_perimetro()
+        {
+            double h,b, per;
+            b = double.Parse(posenx1) + double.Parse(posenx2);
+            h = double.Parse(Poseny1) + double.Parse(Poseny2);
+            per =2*b + 2*h;
+            return per.ToString();
+        }
+
+        public override string ToString()
+        {
+          return string.Format("Area {0}      Perimetro {1}      Distancia {2}",Area,Perimetro,Calcular_Rectangulo() );
+            }
     }
 }
